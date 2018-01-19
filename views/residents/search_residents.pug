@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+    .row   
+        
+        include ../includes/search.pug
+
+        .col-sm-12
+            .card
+                .card-header
+                    .row
+                        .col-md-12
+                            .row
+                                .col-md-11
+                                    | Residents
+                .card-body
+                    table.table.table-hover
+                        thead.thead-light
+                            tr
+                                th(width='10px') #
+                                th(width='10px')
+                                th Name
+                                th Address
+                        tbody
+                            each resident, i in residents
+                                tr
+                                    td 
+                                        = i + 1
+                                    td 
+                                        a(href='/residents/' + resident._id + '/edit')
+                                            != pencil.toSVG()
+
+                                    td 
+                                        = resident.name
+                                    td  
+                                        != resident.address.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br/>')

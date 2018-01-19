@@ -1,0 +1,333 @@
+extends ../layout
+
+block content
+    .row
+
+        include ../includes/search.pug
+
+        .col-sm-12
+            .card
+                .card-header Residents
+                .card-body
+                    form(action="/residents", method="POST", enctype="application/x-www-form-urlencoded")
+                        if id === undefined
+                            input(type='hidden',name='_method',value='PUT')
+                        else    
+                            input(type='hidden',name='id',value=resident._id)
+
+                        div
+                            h5 PERSONAL INFORMATION 
+
+                        .form-row
+                            div.form-group.col-md-10
+                                label Name
+                                input.form-control(name='name', class=( errors.name !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.name ))
+                                if errors.name
+                                    div.invalid-feedback
+                                        | #{errors.name.msg}
+
+                            div.form-group.col-md-1
+                                label Age
+                                input.form-control(type='number',name='age', class=( errors.age !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.age ))
+                                if errors.age
+                                    div.invalid-feedback
+                                        | #{errors.age.msg}
+
+                            div.form-group.col-md-1
+                                label Gender
+                                input.form-control(name='gender', class=( errors.gender !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.gender ))
+                                if errors.gender
+                                    div.invalid-feedback
+                                        | #{errors.gender.msg}
+
+                        .form-row
+                            .form-group.col-md-2
+                                label Date of Birth
+                                input.form-control(type='date',name='dob', class=( errors.dob !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.dob_yyyy_mm_dd ))
+                                if errors.dob
+                                    div.invalid-feedback
+                                        | #{errors.dob.msg}
+
+                            .form-group.col-md-3
+                                label Nationality
+                                input.form-control(name='nationality', class=( errors.nationality !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.nationality ))
+                                if errors.nationality
+                                    div.invalid-feedback
+                                        | #{errors.nationality.msg}
+
+                            .form-group.col-md-3
+                                label Educational Level
+                                input.form-control(name='educational_level', class=( errors.educational_level !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.educational_level ))
+                                if errors.educational_level
+                                    div.invalid-feedback
+                                        | #{errors.educational_level.msg}
+
+                            .form-group.col-md-2
+                                label Legal Status
+                                input.form-control(name='legal_status', class=( errors.legal_status !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.legal_status ))
+                                if errors.legal_status
+                                    div.invalid-feedback
+                                        | #{errors.legal_status.msg}
+
+                            .form-group.col-md-2
+                                label Rehabilitation Status
+                                input.form-control(name='rehabilitation_status', class=( errors.rehabilitation_status !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.rehabilitation_status ))
+                                if errors.rehabilitation_status
+                                    div.invalid-feedback
+                                        | #{errors.rehabilitation_status.msg}
+
+                        .form-row  
+                            .form-group.col-md-12
+                                label Address
+                                textarea.form-control(name='address',class=( errors.address !== undefined ? 'is-invalid' : ''  ) )
+                                    | #{resident.address}
+                                if errors.address
+                                    div.invalid-feedback
+                                        | #{errors.address.msg}
+                            div.form-group.col-md-12
+                                label City
+                                input.form-control(name='city', class=( errors.city !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.city ))
+                                if errors.city
+                                    div.invalid-feedback
+                                        | #{errors.city.msg}   
+
+                            div.form-group.col-md-12
+                                label Province
+                                input.form-control(name='province', class=( errors.province !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.province ))
+                                if errors.province
+                                    div.invalid-feedback
+                                        | #{errors.province.msg}   
+
+                            div.form-group.col-md-12
+                                label Place of Origin
+                                input.form-control(name='place_of_origin', class=( errors.place_of_origin !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.place_of_origin ))
+                                if errors.place_of_origin
+                                    div.invalid-feedback
+                                        | #{errors.place_of_origin.msg}   
+
+                        .form-row
+                            div.form-group.col-md-5
+                                label Father's Name
+                                input.form-control(name='fathers_name', class=( errors.fathers_name !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.fathers_name ))
+                                if errors.fathers_name
+                                    div.invalid-feedback
+                                        | #{errors.fathers_name.msg} 
+
+                            div.form-group.col-md-5
+                                label Mother's Name
+                                input.form-control(name='mothers_name', class=( errors.mothers_name !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.mothers_name ))
+                                if errors.mothers_name
+                                    div.invalid-feedback
+                                        | #{errors.mothers_name.msg} 
+
+                            div.form-group.col-md-2
+                                label No. of Siblings
+                                input.form-control(type='number',name='number_of_siblings', class=( errors.number_of_siblings !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.number_of_siblings ))
+                                if errors.number_of_siblings
+                                    div.invalid-feedback
+                                        | #{errors.number_of_siblings.msg} 
+
+                        hr
+
+                        div
+                            h5 RESIDENT INFORMATION 
+
+                        .form-row
+                            .form-group.col-md-3
+                                label Admission Number
+                                input.form-control(name='admission_number', class=( errors.admission_number !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.admission_number ))
+                                if errors.admission_number
+                                    div.invalid-feedback
+                                        | #{errors.admission_number.msg}
+
+                            .form-group.col-md-3
+                                label Date Admitted
+                                input.form-control(type='date',name='date_admitted', class=( errors.date_admitted !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.date_admitted_yyyy_mm_dd ))
+                                if errors.date_admitted
+                                    div.invalid-feedback
+                                        | #{errors.date_admitted.msg}
+
+                            .form-group.col-md-3
+                                label Date Released(if applicable)
+                                input.form-control(type='date',name='date_released', class=( errors.date_released !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.date_released_yyyy_mm_dd ))
+                                if errors.date_released
+                                    div.invalid-feedback
+                                        | #{errors.date_released.msg}
+
+                            div.form-group.col-md-3
+                                label Length of Stay(days)
+                                input.form-control(name='length_of_stay', class=( errors.length_of_stay !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.length_of_stay ))
+                                if errors.length_of_stay
+                                    div.invalid-feedback
+                                        | #{errors.length_of_stay.msg}   
+
+                        .form-row
+                            .form-group.col-md-12
+                                label Current Status
+                                textarea.form-control(name='current_status',class=( errors.current_status !== undefined ? 'is-invalid' : ''  ) )
+                                    | #{resident.current_status}
+                                if errors.current_status
+                                    div.invalid-feedback
+                                        | #{errors.current_status.msg}
+
+                            .form-group.col-md-12
+                                label Remarks
+                                textarea.form-control(name='remarks',class=( errors.remarks !== undefined ? 'is-invalid' : ''  ) )
+                                    | #{resident.remarks}
+                                if errors.remarks
+                                    div.invalid-feedback
+                                        | #{errors.remarks.msg}
+
+
+                        hr
+                        div
+                            h5 CASES INFORMATION
+
+                        .card
+                            .card-body
+                                .form-row  
+                                    .form-group.col-md-3
+                                        label Case Number
+                                        input.form-control(name='case_number', class=( errors.case_number !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.case_number ))
+                                        if errors.case_number
+                                            div.invalid-feedback
+                                                | #{errors.case_number.msg}
+
+                                    .form-group.col-md-3
+                                        label Offence Committed
+                                        input.form-control(name='offense_committed', class=( errors.offense_committed !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.offense_committed ))
+                                        if errors.offense_committed
+                                            div.invalid-feedback
+                                                | #{errors.offense_committed.msg}
+
+                                    .form-group.col-md-3
+                                        label Case Status
+                                        input.form-control(name='case_status', class=( errors.case_status !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.case_status ))
+                                        if errors.case_status
+                                            div.invalid-feedback
+                                                | #{errors.case_status.msg}
+
+                                    .form-group.col-md-3
+                                        label Referring Party
+                                        input.form-control(name='referring_party', class=( errors.referring_party !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.referring_party ))
+                                        if errors.referring_party
+                                            div.invalid-feedback
+                                                | #{errors.referring_party.msg}
+
+                                .form-row
+                                    .form-group.col-md-3
+                                        label Name of Victim
+                                        input.form-control(name='name_of_victim', class=( errors.name_of_victim !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.name_of_victim ))
+                                        if errors.name_of_victim
+                                            div.invalid-feedback
+                                                | #{errors.name_of_victim.msg}
+
+                                    .form-group.col-md-3
+                                        label Name of Prosecutor
+                                        input.form-control(name='name_of_prosecutor', class=( errors.name_of_prosecutor !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.name_of_prosecutor ))
+                                        if errors.name_of_prosecutor
+                                            div.invalid-feedback
+                                                | #{errors.name_of_prosecutor.msg}
+                                    
+                                    .form-group.col-md-3
+                                        label Name of Lawyer
+                                        input.form-control(name='name_of_lawyer', class=( errors.name_of_lawyer !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.name_of_lawyer ))
+                                        if errors.name_of_lawyer
+                                            div.invalid-feedback
+                                                | #{errors.name_of_lawyer.msg}
+
+                                    .form-group.col-md-3
+                                        label Name of Judge
+                                        input.form-control(name='name_of_judge', class=( errors.name_of_judge !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.name_of_judge ))
+                                        if errors.name_of_judge
+                                            div.invalid-feedback
+                                                | #{errors.name_of_judge.msg}
+
+                                    input(type="submit", name='action' ,value="Add").btn.btn-primary
+                        
+
+                        input(type='hidden',name='case_id')
+                        each c, i in resident.cases
+                            .card(style='margin-top:16px;')
+                                .card-body
+                                    .form-row  
+                                        .form-group.col-md-3
+                                            label Case Number
+                                            input.form-control(name=`cases[][${i}][case_number]`,value=c.case_number )
+                                            input.form-control(type='hidden',name=`cases[][${i}][_id]`,value=c._id )
+
+                                        .form-group.col-md-3
+                                            label Offense Committed
+                                            input.form-control(name=`cases[][${i}][offense_committed]`,value=c.offense_committed )
+
+                                        .form-group.col-md-3
+                                            label Case Status
+                                            input.form-control(name=`cases[][${i}][case_status]`,value=c.case_status )
+
+                                        .form-group.col-md-3
+                                            label Referring Party
+                                            input.form-control(name=`cases[][${i}][referring_party]`,value=c.referring_party )
+
+                                    .form-row
+                                        .form-group.col-md-3
+                                            label Name of Victim
+                                            input.form-control(name=`cases[][${i}][name_of_victim]`,value=c.name_of_victim )
+
+                                        .form-group.col-md-3
+                                            label Name of Prosecutor
+                                            input.form-control(name=`cases[][${i}][name_of_prosecutor]`,value=c.name_of_prosecutor )
+                                        
+                                        .form-group.col-md-3
+                                            label Name of Lawyer
+                                            input.form-control(name=`cases[][${i}][name_of_lawyer]`,value=c.name_of_lawyer )
+
+                                        .form-group.col-md-3
+                                            label Name of Judge
+                                            input.form-control(name=`cases[][${i}][name_of_judge]`,value=c.name_of_judge )
+
+                                    button(type="button", class="del-btn" ,value="Delete", data-id=c._id).btn.btn-danger Delete
+
+                        hr
+                        
+                        input(type="submit", value="Save").btn.btn-primary
+
+                        if id !== undefined
+                            button(type='button').btn.btn-danger.mx-2#delete_btn Delete
+
+                        a.btn.btn-default(href="/residents") Back
+
+    script.
+        $(() => {
+
+            $('button#delete_btn').click(() => {
+                if ( confirm('Would you like to confirm?') ) {
+
+                    var delete_method = document.createElement('input');
+                    
+                    delete_method.type = 'hidden';
+                    delete_method.value = 'DELETE';
+                    delete_method.name = '_method';
+
+
+                    $('form').append(delete_method);
+                    $('form').submit();
+                }
+            });
+
+            $('button.del-btn').click(function() {
+            
+                if ( confirm('Would you like to confirm?') ) {
+                    var case_id = $(this).data('id');
+
+                    var delete_method = document.createElement('input');
+                    
+                    delete_method.type = 'hidden';
+                    delete_method.value = 'DELETE';
+                    delete_method.name = '_method';
+
+                    $('input[name=case_id]').val(case_id);
+                    $('form').append(delete_method);
+                    $('form').submit();
+                }
+            });
+        });

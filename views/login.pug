@@ -1,0 +1,22 @@
+extends layout 
+
+block content
+    div.row
+        div.col-sm-4.offset-sm-4
+            div.card
+                div.card-title 
+                div.card-body
+                    form(action="/login", method="post")
+                        div.form-group
+                            label Username
+                            input.form-control(name='username', class=( errors.username !== undefined ? 'is-invalid' : ''  ) ,value=( user === undefined ? '' : user.username ))
+                            if errors.username
+                                div.invalid-feedback
+                                    | #{errors.username.msg}
+                        div.form-group
+                            label Password
+                            input(name='password',type="password", class=( errors.password !== undefined ? 'is-invalid' : ''  )).form-control
+                            if errors.password
+                                div.invalid-feedback
+                                    | #{errors.password.msg}
+                        input(type="submit", value="Login").btn.btn-primary

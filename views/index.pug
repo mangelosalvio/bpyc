@@ -1,0 +1,18 @@
+extends layout
+
+block content	
+	div.row
+		div#map.col-sm-9
+		div.col-sm-3.log
+			ul.list-group#log
+				each log, i in logs
+					li.list-group-item
+							= moment(log.current_time).format('LLL')
+							br
+							b= 'Level ' + log.level
+				
+
+	script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD7KaLhLbZQRIzm5IMP28hqFdt8gqvff0A&callback=initMap', async='', defer='')
+
+  
+

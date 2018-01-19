@@ -1,0 +1,1 @@
+db.residents.createIndex({ 'name' : 'text', 'address' : 'text' })
