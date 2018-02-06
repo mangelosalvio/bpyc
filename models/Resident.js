@@ -24,7 +24,14 @@ var residentSchema = new Schema({
     date_released : String,
     current_status : String,
     remarks : String,
-
+    civil_status : String,
+    parents_civil_status : String,
+    date_of_death : Date,
+    family_members : [{
+        name : String,
+        relationship : String,
+        age : Number
+    }],
     cases : [{
         case_number : String,
         offense_committed : String,
@@ -49,10 +56,16 @@ residentSchema
         return moment(this.date_admitted).format('YYYY-MM-DD');
     } );
 
-    residentSchema
+residentSchema
     .virtual('date_released_yyyy_mm_dd')
     .get( function () {
         return moment(this.date_released).format('YYYY-MM-DD');
+    } );
+
+    residentSchema
+    .virtual('date_of_death_yyyy_mm_dd')
+    .get( function () {
+        return moment(this.date_of_death).format('YYYY-MM-DD');
     } );
 
 residentSchema

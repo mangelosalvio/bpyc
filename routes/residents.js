@@ -39,7 +39,11 @@ router.post('/',[
             date_released : req.body.date_released,
             current_status : req.body.current_status,
             remarks : req.body.remarks,
-            cases : (req.body.cases === undefined) ? [] : req.body.cases
+            civil_status : req.body.civil_status,
+            parents_civil_status : req.body.parents_civil_status,
+            date_of_death : req.body.date_of_death,
+            cases : (req.body.cases === undefined) ? [] : req.body.cases,
+            family_members : (req.body.family_members === undefined) ? [] : req.body.family_members
         });
 
         if ( req.body.action == "Add" ) {
@@ -54,6 +58,14 @@ router.post('/',[
                     name_of_lawyer : req.body.name_of_lawyer,
                     name_of_judge : req.body.name_of_judge
                 });
+            }
+
+            if ( req.body.family_name ) {
+                resident.family_members.push({
+                    name : req.body.family_name,
+                    relationship : req.body.family_relationship,
+                    age : req.body.family_age
+                })
             }
             
         }
@@ -96,7 +108,11 @@ router.put('/',[
         date_released : req.body.date_released,
         current_status : req.body.current_status,
         remarks : req.body.remarks,
-        cases : (req.body.cases === undefined) ? [] : req.body.cases
+        civil_status : req.body.civil_status,
+        parents_civil_status : req.body.parents_civil_status,
+        date_of_death : req.body.date_of_death,
+        cases : (req.body.cases === undefined) ? [] : req.body.cases,
+        family_members : (req.body.family_members === undefined) ? [] : req.body.family_members
     });
 
     if ( req.body.action == "Add" ) {
@@ -111,6 +127,14 @@ router.put('/',[
                 name_of_lawyer : req.body.name_of_lawyer,
                 name_of_judge : req.body.name_of_judge
             });
+        }
+
+        if ( req.body.family_name ) {
+            resident.family_members.push({
+                name : req.body.family_name,
+                relationship : req.body.family_relationship,
+                age : req.body.family_age
+            })
         }
         
     }
@@ -207,11 +231,17 @@ router.get('/create', (req, res, next) => {
 router.delete('/', (req, res, next) => {
 
     if ( req.body.case_id ) {
-        console.log(req.body.case_id);
         Resident.update({ _id : req.body.id }, { $pull : { cases : { _id : req.body.case_id } } }, (err) => {
             if ( err ) next(err)
     
             req.flash('success_message','Resident Case Deleted')
+            res.redirect(`/residents/${req.body.id}/edit`);
+        });
+    } else if ( req.body.family_member_id ) {
+        Resident.update({ _id : req.body.id }, { $pull : { family_members : { _id : req.body.family_member_id } } }, (err) => {
+            if ( err ) next(err)
+    
+            req.flash('success_message','Resident Family Member Deleted')
             res.redirect(`/residents/${req.body.id}/edit`);
         });
     } else {

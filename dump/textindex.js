@@ -1,1 +1,1 @@
-db.residents.createIndex({ 'name' : 'text', 'address' : 'text' })
+db.residents.createIndex({ 'name' : 'text', 'address' : 'text' , 'cases.offense_committed' : 'text'})

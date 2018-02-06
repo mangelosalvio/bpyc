@@ -76,6 +76,21 @@ block content
                                     div.invalid-feedback
                                         | #{errors.rehabilitation_status.msg}
 
+                        .form-row
+                            .form-group.col-md-2
+                                label Civil Status
+                                input.form-control(name='civil_status', class=( errors.civil_status !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.civil_status ))
+                                if errors.civil_status
+                                    div.invalid-feedback
+                                        | #{errors.civil_status.msg}
+
+                            .form-group.col-md-2
+                                label Date of Death
+                                input.form-control(type='date',name='date_of_death', class=( errors.date_of_death !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.date_of_death_yyyy_mm_dd ))
+                                if errors.date_of_death
+                                    div.invalid-feedback
+                                        | #{errors.date_of_death.msg}
+
                         .form-row  
                             .form-group.col-md-12
                                 label Address
@@ -127,6 +142,15 @@ block content
                                     div.invalid-feedback
                                         | #{errors.number_of_siblings.msg} 
 
+                        .form-row
+                            div.form-group.col-md-5
+                                label Parent's Civil Status
+                                input.form-control(name='parents_civil_status', class=( errors.parents_civil_status !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.parents_civil_status ))
+                                if errors.parents_civil_status
+                                    div.invalid-feedback
+                                        | #{errors.parents_civil_status.msg} 
+                        
+
                         hr
 
                         div
@@ -177,6 +201,59 @@ block content
                                 if errors.remarks
                                     div.invalid-feedback
                                         | #{errors.remarks.msg}
+                    
+                        hr
+                        div
+                            h5 FAMILY INFORMATION
+
+                        .card
+                            .card-body
+                                .form-row  
+                                    .form-group.col-md-5
+                                        label Name
+                                        input.form-control(name='family_name', class=( errors.family_name !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.family_name ))
+                                        if errors.family_name
+                                            div.invalid-feedback
+                                                | #{errors.family_name.msg}
+
+                                    .form-group.col-md-4
+                                        label Relationship
+                                        input.form-control(name='family_relationship', class=( errors.family_relationship !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.family_relationship ))
+                                        if errors.family_relationship
+                                            div.invalid-feedback
+                                                | #{errors.family_relationship.msg}
+
+                                    .form-group.col-md-1
+                                        label Age
+                                        input.form-control(type='number',name='family_age', class=( errors.family_age !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.family_age ))
+                                        if errors.family_age
+                                            div.invalid-feedback
+                                                | #{errors.family_age.msg}
+
+                                    .form-group.col-md-2.d-flex.align-items-end
+                                        input(type="submit", name='action' ,value="Add").btn.btn-primary
+                                    
+                        input(type='hidden',name='family_member_id')
+                        each c, i in resident.family_members
+                            .card(style='margin-top:16px;')
+                                .card-body
+                                    .form-row  
+                                        .form-group.col-md-5
+                                            label Name
+                                            input.form-control(name=`family_members[][${i}][name]`,value=c.name )
+                                            input.form-control(type='hidden',name=`family_members[][${i}][_id]`,value=c._id )
+
+                                        .form-group.col-md-4
+                                            label Relationship
+                                            input.form-control(name=`family_members[][${i}][relationship]`,value=c.relationship )
+
+                                        .form-group.col-md-1
+                                            label Age
+                                            input.form-control(type='number',name=`family_members[][${i}][age]`,value=c.age )
+
+                                        .form-group.col-md-2.d-flex.align-items-end
+                                            button(type="button", class="del-family-member-btn" ,value="Delete", data-id=c._id).btn.btn-danger Delete
+                                        
 
 
                         hr
@@ -330,4 +407,21 @@ block content
                     $('form').submit();
                 }
             });
+
+            $('button.del-family-member-btn').click(function() {
+            
+                if ( confirm('Would you like to confirm?') ) {
+                    var family_member_id = $(this).data('id');
+
+                    var delete_method = document.createElement('input');
+                    
+                    delete_method.type = 'hidden';
+                    delete_method.value = 'DELETE';
+                    delete_method.name = '_method';
+
+                    $('input[name=family_member_id]').val(family_member_id);
+                    $('form').append(delete_method);
+                    $('form').submit();
+                }
+            });s
         });
