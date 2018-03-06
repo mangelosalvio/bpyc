@@ -21,16 +21,34 @@ block content
                                 th(width='10px')
                                 th Name
                                 th Address
+                                th Cases
+                                th Date of Admission
+                                th Date of Release
+                                th Age
                         tbody
-                            each resident, i in residents
-                                tr
-                                    td 
-                                        = i + 1
-                                    td 
-                                        a(href='/residents/' + resident._id + '/edit')
-                                            != pencil.toSVG()
+                            if residents
+                                each resident, i in residents
+                                    tr
+                                        td 
+                                            = i + 1
+                                        td 
+                                            a(href='/residents/' + resident._id + '/edit')
+                                                != pencil.toSVG()
 
-                                    td 
-                                        = resident.name
-                                    td  
-                                        != resident.address.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br/>')
+                                        td 
+                                            = resident.name
+                                        td  
+                                            != resident.address.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br/>')
+                                        
+                                        td
+                                            ul
+                                                each resident_case in resident.cases
+                                                    li 
+                                                        = resident_case.offense_committed
+                                        td
+                                            = resident.date_admitted_ll
+
+                                        td
+                                            = resident.date_released_ll
+                                        td
+                                            = resident.age

@@ -39,6 +39,7 @@ router.post('/',[
             date_released : req.body.date_released,
             current_status : req.body.current_status,
             remarks : req.body.remarks,
+            status_after_release : req.body.status_after_release,
             civil_status : req.body.civil_status,
             parents_civil_status : req.body.parents_civil_status,
             date_of_death : req.body.date_of_death,
@@ -56,7 +57,10 @@ router.post('/',[
                     name_of_victim : req.body.name_of_victim,
                     name_of_prosecutor : req.body.name_of_prosecutor,
                     name_of_lawyer : req.body.name_of_lawyer,
-                    name_of_judge : req.body.name_of_judge
+                    name_of_judge : req.body.name_of_judge,
+                    case_filed : req.body.case_filed,
+                    date_offense_committed : req.body.date_offense_committed,
+                    age_committed : req.body.age_committed
                 });
             }
 
@@ -108,6 +112,7 @@ router.put('/',[
         date_released : req.body.date_released,
         current_status : req.body.current_status,
         remarks : req.body.remarks,
+        status_after_release : req.body.status_after_release,
         civil_status : req.body.civil_status,
         parents_civil_status : req.body.parents_civil_status,
         date_of_death : req.body.date_of_death,
@@ -125,7 +130,10 @@ router.put('/',[
                 name_of_victim : req.body.name_of_victim,
                 name_of_prosecutor : req.body.name_of_prosecutor,
                 name_of_lawyer : req.body.name_of_lawyer,
-                name_of_judge : req.body.name_of_judge
+                name_of_judge : req.body.name_of_judge,
+                case_filed : req.body.case_filed,
+                date_offense_committed : req.body.date_offense_committed,
+                age_committed : req.body.age_committed
             });
         }
 
@@ -174,11 +182,20 @@ router.get('/', (req, res, next) => {
     var filter = {};
 
     if ( req.query.search_keyword ) {
-        filter = {
-            $text : { 
-                $search : req.query.search_keyword
-             }
-        };
+
+        if (!isNaN(req.query.search_keyword) ) {
+            filter = {
+                age : req.query.search_keyword
+            }
+        } else {
+            filter = {
+                $text : { 
+                    $search : req.query.search_keyword
+                 }
+            };
+        }
+
+        
 
     }
     

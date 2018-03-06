@@ -90,6 +90,9 @@ block content
                                 if errors.date_of_death
                                     div.invalid-feedback
                                         | #{errors.date_of_death.msg}
+                                if resident.deceased
+                                    div.text-center(style="font-weight:bold;")
+                                        | ( #{resident.deceased} )
 
                         .form-row  
                             .form-group.col-md-12
@@ -201,6 +204,14 @@ block content
                                 if errors.remarks
                                     div.invalid-feedback
                                         | #{errors.remarks.msg}
+
+                            .form-group.col-md-12
+                                label Status After Release
+                                textarea.form-control(name='status_after_release',class=( errors.status_after_release !== undefined ? 'is-invalid' : ''  ) )
+                                    | #{resident.status_after_release}
+                                if errors.status_after_release
+                                    div.invalid-feedback
+                                        | #{errors.status_after_release.msg}
                     
                         hr
                         div
@@ -234,25 +245,27 @@ block content
                                         input(type="submit", name='action' ,value="Add").btn.btn-primary
                                     
                         input(type='hidden',name='family_member_id')
-                        each c, i in resident.family_members
-                            .card(style='margin-top:16px;')
-                                .card-body
-                                    .form-row  
-                                        .form-group.col-md-5
-                                            label Name
-                                            input.form-control(name=`family_members[][${i}][name]`,value=c.name )
-                                            input.form-control(type='hidden',name=`family_members[][${i}][_id]`,value=c._id )
 
-                                        .form-group.col-md-4
-                                            label Relationship
-                                            input.form-control(name=`family_members[][${i}][relationship]`,value=c.relationship )
+                        if resident.family_members
+                            each c, i in resident.family_members
+                                .card(style='margin-top:16px;')
+                                    .card-body
+                                        .form-row  
+                                            .form-group.col-md-5
+                                                label Name
+                                                input.form-control(name=`family_members[][${i}][name]`,value=c.name )
+                                                input.form-control(type='hidden',name=`family_members[][${i}][_id]`,value=c._id )
 
-                                        .form-group.col-md-1
-                                            label Age
-                                            input.form-control(type='number',name=`family_members[][${i}][age]`,value=c.age )
+                                            .form-group.col-md-4
+                                                label Relationship
+                                                input.form-control(name=`family_members[][${i}][relationship]`,value=c.relationship )
 
-                                        .form-group.col-md-2.d-flex.align-items-end
-                                            button(type="button", class="del-family-member-btn" ,value="Delete", data-id=c._id).btn.btn-danger Delete
+                                            .form-group.col-md-1
+                                                label Age
+                                                input.form-control(type='number',name=`family_members[][${i}][age]`,value=c.age )
+
+                                            .form-group.col-md-2.d-flex.align-items-end
+                                                button(type="button", class="del-family-member-btn" ,value="Delete", data-id=c._id).btn.btn-danger Delete
                                         
 
 
@@ -320,6 +333,31 @@ block content
                                             div.invalid-feedback
                                                 | #{errors.name_of_judge.msg}
 
+                                .form-row
+                                    .form-group.col-md-3
+                                        .form-check 
+                                            input(type='radio' name='case_filed' id='case_filed', class=( errors.case_filed !== undefined ? 'is-invalid' : ''  ) ,checked=( resident === undefined ? '' : resident.case_filed == 'Case Filed' ), value='Case Filed')
+                                            label.form-check-label(for='case_filed') Case Filed
+                                        .form-check 
+                                            input(type='radio' name='case_filed' id='case_unfiled', class=( errors.case_filed !== undefined ? 'is-invalid' : ''  ) ,checked=( resident === undefined ? '' : resident.case_filed == 'Case Unfiled' ),  value='Case Unfiled')
+                                            label.form-check-label(for='case_unfiled') Case Unfiled
+                                            
+                                            
+                                    .form-group.col-md-3
+                                        label Date Offense Committed
+                                        input.form-control(type='date', name='date_offense_committed', class=( errors.date_offense_committed !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.date_offense_committed ))
+                                        if errors.date_offense_committed
+                                            div.invalid-feedback
+                                                | #{errors.date_offense_committed.msg}
+
+                                    .form-group.col-md-3
+                                        label Age Committed
+                                        input.form-control(type='number',name='age_committed', class=( errors.age_committed !== undefined ? 'is-invalid' : ''  ) ,value=( resident === undefined ? '' : resident.age_committed ))
+                                        if errors.age_committed
+                                            div.invalid-feedback
+                                                | #{errors.age_committed.msg}
+
+                                .form-row
                                     input(type="submit", name='action' ,value="Add").btn.btn-primary
                         
 
@@ -362,7 +400,31 @@ block content
                                             label Name of Judge
                                             input.form-control(name=`cases[][${i}][name_of_judge]`,value=c.name_of_judge )
 
-                                    button(type="button", class="del-btn" ,value="Delete", data-id=c._id).btn.btn-danger Delete
+                                    .form-row
+                                        .form-group.col-md-3
+                                            .form-check 
+                                                input(type='radio' name=`cases[][${i}][case_filed]` id=`case_filed_${i}`, class=( errors.case_filed !== undefined ? 'is-invalid' : ''  ) ,checked=( c === undefined ? '' : c.case_filed == 'Case Filed' ), value='Case Filed')
+                                                label.form-check-label(for=`case_filed_${i}`) Case Filed
+                                            .form-check 
+                                                input(type='radio' name=`cases[][${i}][case_filed]` id=`case_unfiled_${i}`, class=( errors.case_filed !== undefined ? 'is-invalid' : ''  ) ,checked=( c === undefined ? '' : c.case_filed == 'Case Unfiled' ),  value='Case Unfiled')
+                                                label.form-check-label(for=`case_unfiled_${i}`) Case Unfiled
+                                                
+                                                
+                                        .form-group.col-md-3
+                                            label Date Offense Committed
+                                            input.form-control(type='date', name=`cases[][${i}][date_offense_committed]`, class=( errors.date_offense_committed !== undefined ? 'is-invalid' : ''  ) ,value=( c === undefined ? '' : c.date_offense_committed_yyyy_mm_dd ))
+                                            if errors.date_offense_committed
+                                                div.invalid-feedback
+                                                    | #{errors.date_offense_committed.msg}
+
+                                        .form-group.col-md-3
+                                            label Age Committed
+                                            input.form-control(name=`cases[][${i}][age_committed]`, class=( errors.age_committed !== undefined ? 'is-invalid' : ''  ) ,value=( c === undefined ? '' : c.age_committed ))
+                                            if errors.age_committed
+                                                div.invalid-feedback
+                                                    | #{errors.age_committed.msg}
+                                    .form-row
+                                        button(type="button", class="del-btn" ,value="Delete", data-id=c._id).btn.btn-danger Delete
 
                         hr
                         
