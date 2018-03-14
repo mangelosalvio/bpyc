@@ -48,7 +48,7 @@ router.post('/',[
         });
 
         if ( req.body.action == "Add" ) {
-            if ( req.body.case_number ) {
+            if ( req.body.offense_committed ) {
                 resident.cases.push({
                     case_number : req.body.case_number,
                     offense_committed : req.body.offense_committed,
@@ -121,7 +121,7 @@ router.put('/',[
     });
 
     if ( req.body.action == "Add" ) {
-        if ( req.body.case_number ) {
+        if ( req.body.offense_committed ) {
             resident.cases.push({
                 case_number : req.body.case_number,
                 offense_committed : req.body.offense_committed,

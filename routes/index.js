@@ -49,7 +49,14 @@ router.post('/login', [
 				if ( error || !user ) {
 					var err = new Error("Wrong email or password");
 					err.status = 401;
-					return next(err);
+
+
+
+					res.render('login', { user, errors : {
+						password : {
+							msg : 'Invalid email or password'
+						}
+					} });
 				} else {
 					req.session.userId = user._id;
 					return res.redirect('/residents');

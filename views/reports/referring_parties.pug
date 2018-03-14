@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+    .row   
+        .col-sm-12
+            .card
+                .card-header
+                    .row
+                        .col-md-12
+                            .row
+                                .col-md-11
+                                    | Residents per Referring Parties
+                .card-body
+                    table.table.table-hover
+                        thead.thead-light
+                            tr
+                                th(width='10px') #
+                                th Referring Party
+                                th Name
+                                th.text-center Count
+                        tbody
+                            if residents
+                                each resident, i in residents
+                                    tr
+                                        td 
+                                            = i + 1
+                                        td 
+                                            = resident.referring_party
+                                        td
+                                            ul
+                                                each r in resident.names
+                                                    li 
+                                                        a(href='/residents/' + r._id + '/edit')
+                                                            = r.name
+                                        td.text-center
+                                            = resident.count

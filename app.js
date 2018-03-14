@@ -26,6 +26,7 @@ var residents = require('./routes/residents');
 const genres = require('./routes/genres');
 const books = require('./routes/books');
 const sensor = require('./routes/sensor');
+const reports = require('./routes/reports');
 
 var app = express();
 
@@ -113,6 +114,7 @@ app.use('/genres', genres);
 app.use('/books', books);
 app.use('/sensor', sensor);
 app.use('/residents',residents)
+app.use('/reports',reports)
  
 
 app.use('/', index);

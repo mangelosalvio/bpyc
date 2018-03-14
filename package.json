@@ -22,9 +22,35 @@
     "moment": "^2.19.2",
     "mongoose": "^4.11.12",
     "morgan": "~1.9.0",
+    "nodemon": "^1.17.1",
     "octicons": "^7.0.1",
+    "pm2": "^2.10.1",
     "pug": "2.0.0-beta11",
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.0.4"
-  }
+  },
+  "bundledDependencies": [
+    "bcrypt",
+    "body-parser",
+    "bootstrap",
+    "bower",
+    "connect-flash",
+    "connect-mongo",
+    "cookie-parser",
+    "debug",
+    "express",
+    "express-messages",
+    "express-session",
+    "express-validator",
+    "method-override",
+    "moment",
+    "mongoose",
+    "morgan",
+    "nodemon",
+    "octicons",
+    "pm2",
+    "pug",
+    "serve-favicon",
+    "socket.io"
+  ]
 }
